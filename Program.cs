@@ -1,2 +1,66 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿//Задайте двумерный массив. 
+//Напишите программу, которая упорядочит по убыванию элементы каждой строки двумерного массива.
+
+
+int InputNum(string message) //Ввод с клавиатуры
+{
+    Console.Write(message);
+    return int.Parse(Console.ReadLine()!);
+}
+
+int[,] Create2DArray(int rows, int cols) //Создание двумерного массива
+{
+    return new int[rows, cols];
+}
+
+void Fill2DArray(int[,] array) //Заполнение двумерного массива
+{
+    Random rnd = new Random();
+    for (int i = 0; i < array.GetLength(0); i++)
+        for (int j = 0; j < array.GetLength(1); j++)
+            array[i, j] = rnd.Next(-100, 101);
+}
+
+void Print2DArray(int[,] array) //Вывод двумерного массива на экран
+{
+    //Console.Write("Ваш массив: \n");
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+            Console.Write($"{array[i, j]}\t");
+        Console.WriteLine();
+    }
+    Console.WriteLine();
+}
+
+void PoradokUbiv(int[,] array) //Сортировка по убыванию массива
+{
+  for (int i = 0; i < array.GetLength(0); i++)
+  {
+    for (int j = 0; j < array.GetLength(1); j++)
+    {
+      for (int k = 0; k < array.GetLength(1) - 1; k++)
+      {
+        if (array[i, k] < array[i, k + 1])
+        {
+          int temp = array[i, k + 1];
+          array[i, k + 1] = array[i, k];
+          array[i, k] = temp;
+        }
+      }
+    }
+  }
+}
+
+int rows = InputNum("Введите количество строк: ");
+int columns = InputNum("Введите количество столбцов: ");
+
+Console.WriteLine($"Ваш массив: \n");
+int[,] myArray = Create2DArray(rows, columns);
+Fill2DArray(myArray);
+Print2DArray(myArray);
+
+Console.WriteLine($"Отсортированный массив: \n");
+PoradokUbiv(myArray);
+Print2DArray(myArray);
+
