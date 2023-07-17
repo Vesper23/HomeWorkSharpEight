@@ -1,7 +1,7 @@
 ﻿//Задайте двумерный массив. 
 //Напишите программу, которая упорядочит по убыванию элементы каждой строки двумерного массива.
 
-
+/*
 int InputNum(string message) //Ввод с клавиатуры
 {
     Console.Write(message);
@@ -63,4 +63,69 @@ Print2DArray(myArray);
 Console.WriteLine($"Отсортированный массив: \n");
 PoradokUbiv(myArray);
 Print2DArray(myArray);
+*/
 
+
+//Задайте прямоугольный двумерный массив. 
+//Напишите программу, которая будет находить строку с наименьшей суммой элементов.
+
+int InputNum(string message) //Ввод с клавиатуры
+{
+    Console.Write(message);
+    return int.Parse(Console.ReadLine()!);
+}
+
+int[,] Create2DArray(int rows, int cols) //Создание двумерного массива
+{
+    return new int[rows, cols];
+}
+
+void Fill2DArray(int[,] array) //Заполнение двумерного массива
+{
+    Random rnd = new Random();
+    for (int i = 0; i < array.GetLength(0); i++)
+        for (int j = 0; j < array.GetLength(1); j++)
+            array[i, j] = rnd.Next(-100, 101);
+}
+
+void Print2DArray(int[,] array) //Вывод двумерного массива на экран
+{
+    Console.Write("Ваш прямоугольный массив: \n");
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+            Console.Write($"{array[i, j]}\t");
+        Console.WriteLine();
+    }
+    Console.WriteLine();
+}
+
+int SumRowsElems(int[,] array, int i) //Сумма элементов в строке
+{
+  int sum = array[i, 0];
+  for (int j = 1; j < array.GetLength(1); j++)
+  {
+    sum += array[i, j];
+  }
+  return sum;
+}
+
+int rowscolumns = InputNum("Введите количество строк и столбцов: ");
+
+int[,] myArray = Create2DArray(rowscolumns, rowscolumns);
+Fill2DArray(myArray);
+Print2DArray(myArray);
+
+int minSumRows = 0;
+int sumRows = SumRowsElems(myArray, 0);
+for (int i = 1; i < myArray.GetLength(0); i++)
+{
+  int cloneSumRows = SumRowsElems(myArray, i);
+  if (sumRows > cloneSumRows)
+  {
+    sumRows = cloneSumRows;
+    minSumRows = i;
+  }
+}
+
+Console.WriteLine($"\n{minSumRows+1} - строкa с наименьшей суммой ({sumRows}) элементов ");
