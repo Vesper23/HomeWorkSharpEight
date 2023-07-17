@@ -135,6 +135,7 @@ Console.WriteLine($"\n{minSumRows+1} - строкa с наименьшей су�
 //Задайте две матрицы. 
 //Напишите программу, которая будет находить произведение двух матриц.
 
+/*
 int InputNum(string message) //Ввод с клавиатуры
 {
     Console.Write(message);
@@ -201,3 +202,73 @@ int[,] resultArray = Create2DArray(rowsone, columnsecond);
 ProizvedArrays(firstArray, secondArray, resultArray);
 Console.WriteLine($"Произведение первой и второй матрицы: \n");
 Print2DArray(resultArray);
+*/
+
+//Сформируйте трёхмерный массив из неповторяющихся двузначных чисел.
+//Напишите программу, которая будет построчно выводить массив, добавляя индексы каждого элемента.
+
+int InputNum(string message) //Ввод с клавиатуры
+{
+    Console.Write(message);
+    return int.Parse(Console.ReadLine()!);
+}
+
+void Create3DArray(int[ , , ] array3D) //Создание трехмерного массива из неповторяющихся двузначных чисел под условия задачи 
+{
+  int[] proizved = new int[array3D.GetLength(0) * array3D.GetLength(1) * array3D.GetLength(2)];
+  int number;
+  for (int i = 0; i < proizved.GetLength(0); i++)
+  {
+    proizved[i] = new Random().Next(10, 100);
+    number = proizved[i];
+    if (i >= 1)
+    {
+      for (int j = 0; j < i; j++)
+      {
+        while (proizved[i] == proizved[j])
+        {
+          proizved[i] = new Random().Next(10, 100);
+          j = 0;
+          number = proizved[i];
+        }
+        number = proizved[i];
+      }
+    }
+  }
+  int count = 0;
+  for (int x = 0; x < array3D.GetLength(0); x++)
+  {
+    for (int y = 0; y < array3D.GetLength(1); y++)
+    {
+      for (int z = 0; z < array3D.GetLength(2); z++)
+      {
+        array3D[x, y, z] = proizved[count];
+        count++;
+      }
+    }
+  }
+}
+
+void Print3DArray(int[ , , ] array3D) //Печать трехмерного массива
+{
+  for (int i = 0; i < array3D.GetLength(0); i++)
+  {
+    for (int j = 0; j < array3D.GetLength(1); j++)
+    {
+      Console.Write($"X({i}) Y({j}) ");
+      for (int k = 0; k < array3D.GetLength(2); k++)
+        Console.Write($"Z({k})={array3D[i, j, k]}; ");
+      Console.WriteLine();
+    }
+    Console.WriteLine();
+  }
+}
+
+int x = InputNum("Введите X: ");
+int y = InputNum("Введите Y: ");
+int z = InputNum("Введите Z: ");
+Console.WriteLine();
+
+int[ , , ] array3D = new int[x, y, z];
+Create3DArray(array3D);
+Print3DArray(array3D);
